@@ -1,0 +1,8 @@
+@СafeWithCats_HostAddress = http://localhost:5177
+
+GET {{СafeWithCats_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+INSERT INTO persons (lastname, firstname, age, gender)
+VALUES ('Smith', 'John', 30, 'Male');
