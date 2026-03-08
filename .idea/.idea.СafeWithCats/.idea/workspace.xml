@@ -9,7 +9,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdf39c43-089d-49a0-a736-d5f488795a88" name="Changes" comment="" />
+    <list default="true" id="fdf39c43-089d-49a0-a736-d5f488795a88" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/CafesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/CatsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/ClientsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/DishesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/DrinksController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/MenusController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/PersonsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/ReservationClientsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/ReservationsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/SchedulesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/СafeWithCats/Controllers/StaffController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.СafeWithCats/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.СafeWithCats/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/Models/CafeContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/Models/CafeContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/Models/Shedule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/Models/Schedule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/bin/Debug/net10.0/СafeWithCats.dll" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/bin/Debug/net10.0/СafeWithCats.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/bin/Debug/net10.0/СafeWithCats.exe" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/bin/Debug/net10.0/СafeWithCats.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/bin/Debug/net10.0/СafeWithCats.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/bin/Debug/net10.0/СafeWithCats.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/ref/СafeWithCats.dll" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/ref/СafeWithCats.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/refint/СafeWithCats.dll" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/refint/СafeWithCats.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.dll" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/СafeWithCats/obj/Debug/net10.0/СafeWithCats.pdb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +48,21 @@
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d52e5e251273a0d47ed42b3f5fe332fa9d68f7834d1aa29bd6a72174e49d/NpgsqlDataReader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/CafesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/CatsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/DishesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/DrinksController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/MenusController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/PersonsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/ReservationClientsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/ReservationsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/SchedulesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/СafeWithCats/Controllers/StaffController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/СafeWithCats/Models/Cafe.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/СafeWithCats/Models/CafeContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/СafeWithCats/Models/Cat.cs" root0="FORCE_HIGHLIGHTING" />
@@ -37,10 +80,18 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="3AfmOo4LOyyGFNM0IRvcXeILXiy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -49,9 +100,11 @@
   &quot;keyToString&quot;: {
     &quot;.NET Launch Settings Profile.СafeWithCats: http.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.СafeWithCats | #2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -125,13 +178,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1772991971144</updated>
-      <workItem from="1772991972973" duration="4592000" />
+      <workItem from="1772991972973" duration="9510000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

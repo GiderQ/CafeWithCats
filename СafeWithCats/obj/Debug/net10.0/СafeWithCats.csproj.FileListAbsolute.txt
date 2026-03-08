@@ -134,3 +134,4 @@ D:\repository Github\СafeWithCats\СafeWithCats\obj\Debug\net10.0\refint\СafeW
 D:\repository Github\СafeWithCats\СafeWithCats\obj\Debug\net10.0\СafeWithCats.pdb
 D:\repository Github\СafeWithCats\СafeWithCats\obj\Debug\net10.0\СafeWithCats.genruntimeconfig.cache
 D:\repository Github\СafeWithCats\СafeWithCats\obj\Debug\net10.0\ref\СafeWithCats.dll
+D:\repository Github\СafeWithCats\СafeWithCats\obj\Debug\net10.0\СafeWithCats.sourcelink.json

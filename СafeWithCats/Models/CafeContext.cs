@@ -14,7 +14,7 @@ public class CafeContext : DbContext
     public DbSet<Dish> Dishes { get; set; }
     public DbSet<Drink> Drinks { get; set; }
     public DbSet<Menu> Menus { get; set; }
-    public DbSet<Menu> Shedules { get; set; }
+    public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<ReservationClient> ReservationClients { get; set; }
 
