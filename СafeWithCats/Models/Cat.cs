@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CafeWithCats.Models;
 
 [Table("cats")]
-public class Cat
+public class Cat : Entity
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("name")]
     public string Name { get; set; }
 
@@ -21,4 +16,7 @@ public class Cat
 
     [Column("schedule_id")]
     public int ScheduleId { get; set; }
+
+    [ForeignKey(nameof(ScheduleId))]
+    public Schedule Schedule { get; set; }
 }

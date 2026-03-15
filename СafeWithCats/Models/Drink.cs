@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CafeWithCats.Models;
 
 [Table("drinks")]
-public class Drink
+public class Drink : Entity
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("is_alcoholic")]
     public bool IsAlcoholic { get; set; }
 

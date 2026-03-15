@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CafeWithCats.Models;
 
 [Table("persons")]
-public class Person
+public class Person : Entity
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("lastname")]
     public string LastName { get; set; }
 

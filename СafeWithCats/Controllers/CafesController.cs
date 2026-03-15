@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
-
-namespace CafeWithCats.Controllers;
+using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("[controller]")]
@@ -13,7 +12,6 @@ public class CafesController : ControllerBase
     {
         _context = context;
     }
-
     [HttpGet]
     public IActionResult GetAll() => Ok(_context.Cafes.ToList());
 

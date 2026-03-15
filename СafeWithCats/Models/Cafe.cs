@@ -1,17 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CafeWithCats.Models;
 
 [Table("cafes")]
-public class Cafe
+public class Cafe : Entity
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
-    [Column("address")]
-    public string Address { get; set; }
+    [Column("address")] public string Address { get; set; } = null!;
 
     [Column("work_time")]
     public DateTime WorkTime { get; set; }

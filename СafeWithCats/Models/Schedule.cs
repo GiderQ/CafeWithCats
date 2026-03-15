@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CafeWithCats.Models;
 
 [Table("schedules")]
-public class Schedule
+public class Schedule : Entity
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("start_time")]
     public DateTime ShiftStart { get; set; }
 
@@ -21,4 +16,6 @@ public class Schedule
 
     [Column("weekday")]
     public string DayOfWeek { get; set; }
+    
+    public ICollection<Cat> Cats { get; set; }
 }

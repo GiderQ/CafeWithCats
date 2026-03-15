@@ -23,7 +23,6 @@ public class MenusController : ControllerBase
         var menu = _context.Menus.Find(id);
         return menu == null ? NotFound() : Ok(menu);
     }
-
     [HttpPost]
     public IActionResult Create(Menu menu)
     {
