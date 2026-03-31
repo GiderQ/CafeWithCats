@@ -1,0 +1,17 @@
+﻿@model CafeWithCats.Models.Schedule
+
+<h1>Delete Schedule</h1>
+
+<h3>Are you sure?</h3>
+
+<p><strong>Date:</strong> @Model.Date.ToShortDateString()</p>
+<p><strong>Shift Start:</strong> @Model.ShiftStart</p>
+<p><strong>Shift End:</strong> @Model.ShiftEnd</p>
+<p><strong>Cats:</strong> @string.Join(", ", Model.Cats.Select(c => c.Name))</p>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CafeWithCats.Models.Cafe>
+
+<h1>Кафе</h1>
+<a asp-action="Create">Добавить кафе</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Адрес</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var cafe in Model)
+    {
+        <tr>
+            <td>@cafe.Address</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@cafe.Id">Подробнее</a>
+                <a asp-action="Edit" asp-route-id="@cafe.Id">Изменить</a>
+                <a asp-action="Delete" asp-route-id="@cafe.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,14 @@
+﻿@model CafeWithCats.Models.Dish
+
+<h1>Детали блюда</h1>
+
+<div>
+    <p><strong>Price:</strong> @Model.Price</p>
+    <p><strong>Weight:</strong> @Model.Weight</p>
+    <p><strong>Ingredients:</strong> @Model.Ingredients</p>
+</div>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a> |
+    <a asp-action="Index">Назад</a>
+</p>

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CafeWithCats.Models.Schedule>
+
+<h1>Schedules</h1>
+
+<p>
+    <a asp-action="Create">Create Schedule</a>
+</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Shift Start</th>
+        <th>Shift End</th>
+        <th>Date</th>
+        <th>Day Of Week</th>
+        <th>Cats</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var schedule in Model)
+    {
+        <tr>
+            <td>@schedule.ShiftStart</td>
+            <td>@schedule.ShiftEnd</td>
+            <td>@schedule.Date.ToShortDateString()</td>
+            <td>@schedule.DayOfWeek</td>
+            <td>@string.Join(", ", schedule.Cats.Select(c => c.Name))</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@schedule.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@schedule.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@schedule.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

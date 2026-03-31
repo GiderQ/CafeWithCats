@@ -1,0 +1,17 @@
+﻿@model CafeWithCats.Models.Cafe
+
+<h1>Редактировать кафе</h1>
+
+<form asp-action="Edit">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    
+    <div>
+        <label asp-for="Address">Адрес</label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address"></span>
+    </div>
+
+    <button type="submit">Сохранить</button>
+    <a asp-action="Index">Отмена</a>
+</form>

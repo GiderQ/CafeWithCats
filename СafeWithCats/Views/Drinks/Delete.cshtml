@@ -1,0 +1,18 @@
+﻿@model CafeWithCats.Models.Dish
+
+<h1>Удалить блюдо</h1>
+
+<h3>Вы уверены, что хотите удалить это блюдо?</h3>
+
+<div>
+    <p><strong>Price:</strong> @Model.Price</p>
+    <p><strong>Weight:</strong> @Model.Weight</p>
+    <p><strong>Ingredients:</strong> @Model.Ingredients</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Удалить</button>
+    <a asp-action="Index">Отмена</a>
+</form>

@@ -1,0 +1,39 @@
+﻿@model CafeWithCats.Models.Schedule
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<h1>Edit Schedule</h1>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label asp-for="ShiftStart"></label>
+        <input asp-for="ShiftStart" type="datetime-local" />
+    </div>
+
+    <div>
+        <label asp-for="ShiftEnd"></label>
+        <input asp-for="ShiftEnd" type="datetime-local" />
+    </div>
+
+    <div>
+        <label asp-for="Date"></label>
+        <input asp-for="Date" type="date" />
+    </div>
+
+    <div>
+        <label asp-for="DayOfWeek"></label>
+        <input asp-for="DayOfWeek" />
+    </div>
+
+    <div>
+        <label>Cats</label>
+        <select asp-for="Cats" asp-items="@(new MultiSelectList(ViewBag.Cats, "Id", "Name", Model.Cats.Select(c => c.Id)))" multiple="multiple"></select>
+    </div>
+
+    <button type="submit">Save</button>
+    <a asp-action="Index">Cancel</a>
+</form>

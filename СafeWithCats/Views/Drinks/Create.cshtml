@@ -1,0 +1,29 @@
+﻿@model CafeWithCats.Models.Dish
+
+<h1>Создать блюдо</h1>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label asp-for="Price"></label>
+        <input asp-for="Price" />
+        <span asp-validation-for="Price"></span>
+    </div>
+
+    <div>
+        <label asp-for="Weight"></label>
+        <input asp-for="Weight" />
+        <span asp-validation-for="Weight"></span>
+    </div>
+
+    <div>
+        <label asp-for="Ingredients"></label>
+        <input asp-for="Ingredients" />
+        <span asp-validation-for="Ingredients"></span>
+    </div>
+
+    <button type="submit">Создать</button>
+    <a asp-action="Index">Отмена</a>
+</form>
