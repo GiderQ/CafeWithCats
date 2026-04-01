@@ -1,0 +1,39 @@
+﻿@model CafeWithCats.Models.Cafe
+
+<h1>New Cafe</h1>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label asp-for="Address">Address</label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address"></span>
+    </div>
+
+    <div>
+        <label asp-for="CatId">Cat</label>
+        <select asp-for="CatId" asp-items="ViewBag.Cats">
+            <option value="">-- Choose Cat --</option>
+        </select>
+        <span asp-validation-for="CatId"></span>
+    </div>
+
+    <div>
+        <label asp-for="StaffId">Staff</label>
+        <select asp-for="StaffId" asp-items="ViewBag.Staffs">
+            <option value="">-- Choose Staff --</option>
+        </select>
+        <span asp-validation-for="StaffId"></span>
+    </div>
+
+    <div>
+        <label asp-for="WorkTime">Working Time</label>
+        <input asp-for="WorkTime" type="datetime-local" />
+        <span asp-validation-for="WorkTime"></span>
+    </div>
+
+    <button type="submit">Create</button>
+    <a asp-action="Index">Cancel</a>
+</form>

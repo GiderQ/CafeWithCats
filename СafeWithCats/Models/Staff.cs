@@ -3,7 +3,7 @@
 namespace CafeWithCats.Models;
 
 [Table("staff")]
-public class Staff : Entity
+public class Staff : Person
 {
     [Column("work_phone")]
     public string WorkPhone { get; set; }

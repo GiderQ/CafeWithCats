@@ -1,6 +1,13 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Client
 
-<p>Адрес: @Model.Address</p>
+<h1>Client Details</h1>
 
-<a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a>
-<a asp-action="Index">Назад к списку</a>
+<p><strong>First Name:</strong> @Model.FirstName</p>
+<p><strong>Last Name:</strong> @Model.LastName</p>
+<p><strong>Age:</strong> @Model.Age</p>
+<p><strong>Gender:</strong> @Model.Gender</p>
+<p><strong>Phone:</strong> @Model.Phone</p>
+<p><strong>Email:</strong> @Model.Email</p>
+
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+<a asp-action="Index">Back</a>

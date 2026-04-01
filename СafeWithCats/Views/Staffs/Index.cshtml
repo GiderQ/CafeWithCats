@@ -1,24 +1,41 @@
-﻿@model IEnumerable<CafeWithCats.Models.Cafe>
+﻿@model IEnumerable<CafeWithCats.Models.Staff>
 
-<h1>Кафе</h1>
-<a asp-action="Create">Добавить кафе</a>
+<h1>Staffs</h1>
 
-<table>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add Staff</a>
+</p>
+
+<table class="table">
     <thead>
     <tr>
-        <th>Адрес</th>
-        <th>Действия</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Position</th>
+        <th>Work Phone</th>
+        <th>Work Email</th>
+        <th>Salary</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var cafe in Model)
+    @foreach (var s in Model)
     {
         <tr>
-            <td>@cafe.Address</td>
+            <td>@s.FirstName</td>
+            <td>@s.LastName</td>
+            <td>@s.Age</td>
+            <td>@s.Gender</td>
+            <td>@s.Position</td>
+            <td>@s.WorkPhone</td>
+            <td>@s.WorkEmail</td>
+            <td>@s.Salary</td>
             <td>
-                <a asp-action="Details" asp-route-id="@cafe.Id">Подробнее</a>
-                <a asp-action="Edit" asp-route-id="@cafe.Id">Изменить</a>
-                <a asp-action="Delete" asp-route-id="@cafe.Id">Удалить</a>
+                <a asp-action="Details" asp-route-id="@s.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@s.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@s.Id">Delete</a>
             </td>
         </tr>
     }

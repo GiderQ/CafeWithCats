@@ -10,4 +10,10 @@ public class ReservationClient
 
     [Column("client_id")]
     public int ClientId { get; set; }
+    
+    [ForeignKey(nameof(ReservationId))]
+    public Reservation Reservation { get; set; } = null!;
+
+    [ForeignKey(nameof(ClientId))]
+    public Client Client { get; set; } = null!;
 }

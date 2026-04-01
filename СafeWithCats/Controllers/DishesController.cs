@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace CafeWithCats.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class DishesController : ControllerBase
+public class DishesController : Controller
 {
     private readonly CafeContext _context;
 
@@ -14,39 +11,77 @@ public class DishesController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.Dishes.ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Index()
     {
-        var dish = _context.Dishes.Find(id);
-        return dish == null ? NotFound() : Ok(dish);
+        var dishes = await _context.Dishes.ToListAsync();
+        return View(dishes);
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var dish = await _context.Dishes.FindAsync(id);
+        if (dish == null) return NotFound();
+        return View(dish);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Dish dish)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Dish dish)
     {
-        _context.Dishes.Add(dish);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = dish.Id }, dish);
+        if (ModelState.IsValid)
+        {
+            _context.Dishes.Add(dish);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(dish);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Dish dish)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
     {
-        _context.Dishes.Update(dish);
-        _context.SaveChanges();
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var dish = _context.Dishes.Find(id);
+        var dish = await _context.Dishes.FindAsync(id);
         if (dish == null) return NotFound();
+        return View(dish);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, Dish dish)
+    {
+        if (id != dish.Id) return BadRequest();
+
+        if (ModelState.IsValid)
+        {
+            _context.Dishes.Update(dish);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(dish);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var dish = await _context.Dishes.FindAsync(id);
+        if (dish == null) return NotFound();
+        return View(dish);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var dish = await _context.Dishes.FindAsync(id);
+        if (dish == null) return NotFound();
+
         _context.Dishes.Remove(dish);
-        _context.SaveChanges();
-        return NoContent();
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

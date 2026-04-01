@@ -8,12 +8,16 @@ public class CafeContext : DbContext
 
     public DbSet<Person> Persons { get; set; }
     public DbSet<Client> Clients { get; set; }
-    public DbSet<Staff> Staff { get; set; }
+    public DbSet<Staff> Staffs { get; set; }
     public DbSet<Cat> Cats { get; set; }
     public DbSet<Cafe> Cafes { get; set; }
     public DbSet<Dish> Dishes { get; set; }
     public DbSet<Drink> Drinks { get; set; }
     public DbSet<Menu> Menus { get; set; }
+    
+    public DbSet<MenuDish> MenuDishes { get; set; }
+    public DbSet<MenuDrink> MenuDrinks { get; set; }
+    
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<ReservationClient> ReservationClients { get; set; }
@@ -21,5 +25,11 @@ public class CafeContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ReservationClient>().HasKey(rc => new { rc.ReservationId, rc.ClientId });
+        
+        modelBuilder.Entity<MenuDish>()
+            .HasKey(md => new { md.MenuId, md.DishId });
+
+        modelBuilder.Entity<MenuDrink>()
+            .HasKey(md => new { md.MenuId, md.DrinkId });
     }
 }

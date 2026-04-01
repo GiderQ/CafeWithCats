@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace CafeWithCats.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ClientsController : ControllerBase
+public class ClientsController : Controller
 {
     private readonly CafeContext _context;
 
@@ -14,39 +11,78 @@ public class ClientsController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.Clients.ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Index()
     {
-        var client = _context.Clients.Find(id);
-        return client == null ? NotFound() : Ok(client);
+        var clients = await _context.Clients.ToListAsync();
+        return View(clients);
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var client = await _context.Clients.FindAsync(id);
+        if (client == null) return NotFound();
+        return View(client);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Client client)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Client client)
     {
-        _context.Clients.Add(client);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = client.Id }, client);
+        if (ModelState.IsValid)
+        {
+            _context.Clients.Add(client);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(client);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Client client)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
     {
-        _context.Clients.Update(client);
-        _context.SaveChanges();
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var client = _context.Clients.Find(id);
+        var client = await _context.Clients.FindAsync(id);
         if (client == null) return NotFound();
+        return View(client);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, Client client)
+    {
+        if (id != client.Id) return BadRequest();
+
+        if (ModelState.IsValid)
+        {
+            _context.Clients.Update(client);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(client);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var client = await _context.Clients.FindAsync(id);
+        if (client == null) return NotFound();
+        return View(client);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var client = await _context.Clients.FindAsync(id);
+        if (client == null) return NotFound();
+
         _context.Clients.Remove(client);
-        _context.SaveChanges();
-        return NoContent();
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

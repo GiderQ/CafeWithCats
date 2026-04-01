@@ -1,39 +1,26 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Reservation
 
-<h1>Новое кафе</h1>
+@{
+    ViewData["Title"] = "Create Reservation";
+}
+
+<h1>Create Reservation</h1>
 
 <form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
-    <div asp-validation-summary="All"></div>
-
-    <div>
-        <label asp-for="Address">Address</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
-    </div>
-
-    <div>
-        <label asp-for="CatId">Cat</label>
-        <select asp-for="CatId" asp-items="ViewBag.Cats">
-            <option value="">-- Choose Cat --</option>
+    <div class="form-group">
+        <label asp-for="CafeId">Cafe</label>
+        <select asp-for="CafeId" class="form-control" asp-items="@(new SelectList(ViewBag.Cafes, "Id", "Name"))">
+            <option value="">-- Select a cafe --</option>
         </select>
-        <span asp-validation-for="CatId"></span>
+        <span asp-validation-for="CafeId" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="StaffId">Staff</label>
-        <select asp-for="StaffId" asp-items="ViewBag.Staffs">
-            <option value="">-- Choose Staff --</option>
-        </select>
-        <span asp-validation-for="StaffId"></span>
+    <div class="form-group">
+        <label asp-for="ReservedTime">Reserved Time</label>
+        <input asp-for="ReservedTime" class="form-control" type="time" />
+        <span asp-validation-for="ReservedTime" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="WorkTime">Время работы</label>
-        <input asp-for="WorkTime" type="datetime-local" />
-        <span asp-validation-for="WorkTime"></span>
-    </div>
-
-    <button type="submit">Create</button>
-    <a asp-action="Index">Отмена</a>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>

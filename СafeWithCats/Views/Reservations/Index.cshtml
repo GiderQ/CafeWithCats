@@ -1,24 +1,23 @@
-﻿@model IEnumerable<CafeWithCats.Models.Cafe>
-
-<h1>Кафе</h1>
-<a asp-action="Create">Добавить кафе</a>
-
-<table>
+﻿<table class="table table-striped table-hover">
     <thead>
     <tr>
-        <th>Адрес</th>
-        <th>Действия</th>
+        <th>Id</th>
+        <th>Cafe</th>
+        <th>Reserved Time</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var cafe in Model)
+    @foreach (var r in Model)
     {
         <tr>
-            <td>@cafe.Address</td>
+            <td>@r.Id</td>
+            <td>@r.Cafe?.Name</td>
+            <td>@r.ReservedTime.ToString(@"hh\:mm")</td>
             <td>
-                <a asp-action="Details" asp-route-id="@cafe.Id">Подробнее</a>
-                <a asp-action="Edit" asp-route-id="@cafe.Id">Изменить</a>
-                <a asp-action="Delete" asp-route-id="@cafe.Id">Удалить</a>
+                @Html.ActionLink("Details", "Details", new { id = r.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = r.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = r.Id })
             </td>
         </tr>
     }

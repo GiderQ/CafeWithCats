@@ -1,17 +1,78 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.ViewModels.MenuViewModel
 
-<h1>Редактировать кафе</h1>
+@{
+    ViewData["Title"] = "Edit Menu";
+}
 
-<form asp-action="Edit">
-    @Html.AntiForgeryToken()
-    <input type="hidden" asp-for="Id" />
-    
-    <div>
-        <label asp-for="Address">Адрес</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+<h1>Edit Menu</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Menu.Id" />
+
+            <div class="mb-3">
+                <label asp-for="Menu.Language" class="form-label"></label>
+                <input asp-for="Menu.Language" class="form-control" />
+                <span asp-validation-for="Menu.Language" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Menu.CafeId" class="form-label"></label>
+                <select asp-for="Menu.CafeId" class="form-select"
+                        asp-items="@(new SelectList(Model.AvailableCafes, "Id", "Address"))">
+                    <option value="">— Select Cafe —</option>
+                </select>
+                <span asp-validation-for="Menu.CafeId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Dishes</label>
+                <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                    @foreach (var dish in Model.AvailableDishes)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   name="SelectedDishIds"
+                                   value="@dish.Id"
+                                   @(Model.SelectedDishIds.Contains(dish.Id) ? "checked" : "") />
+                            <label class="form-check-label">
+                                @dish.Name — @dish.Price.ToString("C") (@dish.Weight g)
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Drinks</label>
+                <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                    @foreach (var drink in Model.AvailableDrinks)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   name="SelectedDrinkIds"
+                                   value="@drink.Id"
+                                   @(Model.SelectedDrinkIds.Contains(drink.Id) ? "checked" : "") />
+                            <label class="form-check-label">
+                                @drink.Name — @drink.Price.ToString("C") (@drink.Volume ml)
+                                @if (drink.IsAlcoholic)
+                                {
+                                    <span class="badge bg-warning text-dark">Alcoholic</span>
+                                }
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
     </div>
-
-    <button type="submit">Сохранить</button>
-    <a asp-action="Index">Отмена</a>
-</form>
+</div>

@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
 namespace CafeWithCats.Models;
 
 [Table("clients")]
-public class Client : Entity
+public class Client : Person
 {
     [Column("phone")]
     public string Phone { get; set; }

@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Welcome to CafeWithCats</h1>
+<p>Select a section to navigate:</p>
+
+<nav>
+    <ul>
+        <li>@Html.ActionLink("Cafes", "Index", "Cafes")</li>
+        <li>@Html.ActionLink("Cats", "Index", "Cats")</li>
+        <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
+        <li>@Html.ActionLink("Dishes", "Index", "Dishes")</li>
+        <li>@Html.ActionLink("Drinks", "Index", "Drinks")</li>
+        <li>@Html.ActionLink("Menus", "Index", "Menus")</li>
+        <li>@Html.ActionLink("Reservations", "Index", "Reservations")</li>
+        <li>@Html.ActionLink("Schedules", "Index", "Schedules")</li>
+        <li>@Html.ActionLink("Staffs", "Index", "Staffs")</li>
+        <li>@Html.ActionLink("About Us", "About", "Home")</li>
+    </ul>
+</nav>

@@ -1,17 +1,49 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Client
 
-<h1>Редактировать кафе</h1>
+<h1>Edit Client</h1>
 
-<form asp-action="Edit">
+<form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
-    
+
+    <div asp-validation-summary="All"></div>
+
     <div>
-        <label asp-for="Address">Адрес</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
     </div>
 
-    <button type="submit">Сохранить</button>
-    <a asp-action="Index">Отмена</a>
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName"></span>
+    </div>
+
+    <div>
+        <label asp-for="Age"></label>
+        <input asp-for="Age" type="number" />
+        <span asp-validation-for="Age"></span>
+    </div>
+
+    <div>
+        <label asp-for="Gender"></label>
+        <input asp-for="Gender" />
+        <span asp-validation-for="Gender"></span>
+    </div>
+
+    <div>
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" />
+        <span asp-validation-for="Phone"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" type="email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <button type="submit">Save</button>
+    <a asp-action="Index">Cancel</a>
 </form>

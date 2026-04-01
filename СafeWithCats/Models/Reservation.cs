@@ -10,4 +10,7 @@ public class Reservation : Entity
 
     [Column("cafe_id")]
     public int CafeId { get; set; }
+
+    public Cafe Cafe { get; set; }
+    
 }

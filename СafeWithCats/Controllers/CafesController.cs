@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using CafeWithCats.Models;
 using Microsoft.EntityFrameworkCore;
 
-[ApiController]
-[Route("[controller]")]
-public class CafesController : ControllerBase
+public class CafesController : Controller
 {
     private readonly CafeContext _context;
 
@@ -12,39 +11,79 @@ public class CafesController : ControllerBase
     {
         _context = context;
     }
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.Cafes.ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Index()
     {
-        var cafe = _context.Cafes.Find(id);
-        return cafe == null ? NotFound() : Ok(cafe);
+        var cafes = await _context.Cafes.ToListAsync();
+        return View(cafes);
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var cafe = await _context.Cafes.FindAsync(id);
+        if (cafe == null) return NotFound();
+        return View(cafe);
+    }
+    
+    [HttpGet]
+    public IActionResult Create()
+    {
+        ViewBag.Cats = new SelectList(_context.Cats.ToList(), "Id", "Name");
+        ViewBag.Staffs = new SelectList(_context.Staffs.ToList(), "Id", "FirstName");
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Cafe cafe)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Cafe cafe)
     {
-        _context.Cafes.Add(cafe);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = cafe.Id }, cafe);
+        if (ModelState.IsValid)
+        {
+            _context.Cafes.Add(cafe);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.Cats = new SelectList(_context.Cats.ToList(), "Id", "Name");
+        ViewBag.Staffs = new SelectList(_context.Staffs.ToList(), "Id", "FirstName");
+
+        return View(cafe);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Cafe cafe)
+
+    public async Task<IActionResult> Edit(int id)
     {
+        var cafe = await _context.Cafes.FindAsync(id);
+        if (cafe == null) return NotFound();
+        return View(cafe);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, Cafe cafe)
+    {
+        if (id != cafe.Id) return BadRequest();
+        if (!ModelState.IsValid) return View(cafe);
+
         _context.Cafes.Update(cafe);
-        _context.SaveChanges();
-        return NoContent();
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var cafe = _context.Cafes.Find(id);
+        var cafe = await _context.Cafes.FindAsync(id);
+        if (cafe == null) return NotFound();
+        return View(cafe);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var cafe = await _context.Cafes.FindAsync(id);
         if (cafe == null) return NotFound();
         _context.Cafes.Remove(cafe);
-        _context.SaveChanges();
-        return NoContent();
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

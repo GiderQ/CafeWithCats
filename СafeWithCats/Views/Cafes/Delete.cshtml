@@ -1,0 +1,11 @@
+﻿@model CafeWithCats.Models.Cafe
+
+<h1>Delete Cafe?</h1>
+<p>Are you sure you want to delete <strong>@Model.Address</strong>?</p>
+
+<form asp-action="Delete">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Yes, delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>

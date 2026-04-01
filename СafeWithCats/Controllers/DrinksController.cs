@@ -2,11 +2,7 @@
 using CafeWithCats.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CafeWithCats.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class DrinksController : ControllerBase
+public class DrinksController : Controller
 {
     private readonly CafeContext _context;
 
@@ -14,58 +10,78 @@ public class DrinksController : ControllerBase
     {
         _context = context;
     }
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+
+    public async Task<IActionResult> Index()
     {
         var drinks = await _context.Drinks.ToListAsync();
-        return Ok(drinks);
+        return View(drinks);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> Details(int id)
     {
         var drink = await _context.Drinks.FindAsync(id);
-        if (drink == null)
-            return NotFound();
-        return Ok(drink);
+        if (drink == null) return NotFound();
+        return View(drink);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Drink drink)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Drink drink)
     {
-        _context.Drinks.Add(drink);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = drink.Id }, drink);
+        if (ModelState.IsValid)
+        {
+            _context.Drinks.Add(drink);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(drink);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Drink updatedDrink)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
     {
-        if (id != updatedDrink.Id)
-            return BadRequest("ID mismatch");
-
         var drink = await _context.Drinks.FindAsync(id);
-        if (drink == null)
-            return NotFound();
-
-        drink.Ingredients = updatedDrink.Ingredients;
-        drink.IsAlcoholic = updatedDrink.IsAlcoholic;
-        drink.Price = updatedDrink.Price;
-        drink.Volume = updatedDrink.Volume;
-
-        await _context.SaveChangesAsync();
-        return NoContent();
+        if (drink == null) return NotFound();
+        return View(drink);
     }
 
-    [HttpDelete("{id}")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, Drink drink)
+    {
+        if (id != drink.Id) return BadRequest();
+
+        if (ModelState.IsValid)
+        {
+            _context.Drinks.Update(drink);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(drink);
+    }
+
     public async Task<IActionResult> Delete(int id)
     {
         var drink = await _context.Drinks.FindAsync(id);
-        if (drink == null)
-            return NotFound();
+        if (drink == null) return NotFound();
+        return View(drink);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var drink = await _context.Drinks.FindAsync(id);
+        if (drink == null) return NotFound();
 
         _context.Drinks.Remove(drink);
         await _context.SaveChangesAsync();
-        return NoContent();
+        return RedirectToAction(nameof(Index));
     }
 }

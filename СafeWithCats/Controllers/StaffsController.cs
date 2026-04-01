@@ -1,52 +1,87 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using CafeWithCats.Models;
 
 namespace CafeWithCats.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class StaffController : ControllerBase
+public class StaffsController : Controller
 {
     private readonly CafeContext _context;
 
-    public StaffController(CafeContext context)
+    public StaffsController(CafeContext context)
     {
         _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.Staff.ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult Index()
     {
-        var staff = _context.Staff.Find(id);
-        return staff == null ? NotFound() : Ok(staff);
+        var staffs = _context.Staffs.ToList();
+        return View(staffs);
+    }
+
+    public IActionResult Details(int id)
+    {
+        var staff = _context.Staffs.Find(id);
+        if (staff == null) return NotFound();
+        return View(staff);
+    }
+
+    [HttpGet]
+    public IActionResult Create() => View();
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Staff staff)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Staffs.Add(staff);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(staff);
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var staff = _context.Staffs.Find(id);
+        if (staff == null) return NotFound();
+        return View(staff);
     }
 
     [HttpPost]
-    public IActionResult Create(Staff staff)
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, Staff staff)
     {
-        _context.Staff.Add(staff);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = staff.Id }, staff);
+        if (id != staff.Id) return BadRequest();
+
+        if (ModelState.IsValid)
+        {
+            _context.Staffs.Update(staff);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(staff);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Staff staff)
-    {
-        _context.Staff.Update(staff);
-        _context.SaveChanges();
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
+    [HttpGet]
     public IActionResult Delete(int id)
     {
-        var staff = _context.Staff.Find(id);
+        var staff = _context.Staffs.Find(id);
         if (staff == null) return NotFound();
-        _context.Staff.Remove(staff);
+        return View(staff);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var staff = _context.Staffs.Find(id);
+        if (staff == null) return NotFound();
+
+        _context.Staffs.Remove(staff);
         _context.SaveChanges();
-        return NoContent();
+        return RedirectToAction(nameof(Index));
     }
 }

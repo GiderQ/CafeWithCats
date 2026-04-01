@@ -1,39 +1,74 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.ViewModels.MenuViewModel
 
-<h1>Новое кафе</h1>
+@{
+    ViewData["Title"] = "Create Menu";
+}
 
-<form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
-    <div asp-validation-summary="All"></div>
+<h1>Create Menu</h1>
+<hr />
 
-    <div>
-        <label asp-for="Address">Address</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Menu.Language" class="form-label"></label>
+                <input asp-for="Menu.Language" class="form-control" placeholder="e.g. en, uk" />
+                <span asp-validation-for="Menu.Language" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Menu.CafeId" class="form-label"></label>
+                <select asp-for="Menu.CafeId" class="form-select"
+                        asp-items="@(new SelectList(Model.AvailableCafes, "Id", "Address"))">
+                    <option value="">— Select Cafe —</option>
+                </select>
+                <span asp-validation-for="Menu.CafeId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Dishes</label>
+                <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                    @foreach (var dish in Model.AvailableDishes)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   name="SelectedDishIds"
+                                   value="@dish.Id" />
+                            <label class="form-check-label">
+                                @dish.Name — @dish.Price.ToString("C") (@dish.Weight g)
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Drinks</label>
+                <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                    @foreach (var drink in Model.AvailableDrinks)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   name="SelectedDrinkIds"
+                                   value="@drink.Id" />
+                            <label class="form-check-label">
+                                @drink.Name — @drink.Price.ToString("C") (@drink.Volume ml)
+                                @if (drink.IsAlcoholic)
+                                {
+                                    <span class="badge bg-warning text-dark">Alcoholic</span>
+                                }
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
     </div>
-
-    <div>
-        <label asp-for="CatId">Cat</label>
-        <select asp-for="CatId" asp-items="ViewBag.Cats">
-            <option value="">-- Choose Cat --</option>
-        </select>
-        <span asp-validation-for="CatId"></span>
-    </div>
-
-    <div>
-        <label asp-for="StaffId">Staff</label>
-        <select asp-for="StaffId" asp-items="ViewBag.Staffs">
-            <option value="">-- Choose Staff --</option>
-        </select>
-        <span asp-validation-for="StaffId"></span>
-    </div>
-
-    <div>
-        <label asp-for="WorkTime">Время работы</label>
-        <input asp-for="WorkTime" type="datetime-local" />
-        <span asp-validation-for="WorkTime"></span>
-    </div>
-
-    <button type="submit">Create</button>
-    <a asp-action="Index">Отмена</a>
-</form>
+</div>

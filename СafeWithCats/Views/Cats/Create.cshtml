@@ -1,39 +1,36 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Cat
+@using Microsoft.AspNetCore.Mvc.Rendering
 
-<h1>Новое кафе</h1>
+<h1>Create New Cat</h1>
 
 <form asp-action="Create" method="post">
     @Html.AntiForgeryToken()
     <div asp-validation-summary="All"></div>
 
     <div>
-        <label asp-for="Address">Address</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
     </div>
 
     <div>
-        <label asp-for="CatId">Cat</label>
-        <select asp-for="CatId" asp-items="ViewBag.Cats">
-            <option value="">-- Choose Cat --</option>
-        </select>
-        <span asp-validation-for="CatId"></span>
+        <label asp-for="Breed"></label>
+        <input asp-for="Breed" />
+        <span asp-validation-for="Breed"></span>
     </div>
 
     <div>
-        <label asp-for="StaffId">Staff</label>
-        <select asp-for="StaffId" asp-items="ViewBag.Staffs">
-            <option value="">-- Choose Staff --</option>
-        </select>
-        <span asp-validation-for="StaffId"></span>
+        <label asp-for="Gender"></label>
+        <input asp-for="Gender" />
+        <span asp-validation-for="Gender"></span>
     </div>
 
     <div>
-        <label asp-for="WorkTime">Время работы</label>
-        <input asp-for="WorkTime" type="datetime-local" />
-        <span asp-validation-for="WorkTime"></span>
+        <label asp-for="ScheduleId"></label>
+        <select asp-for="ScheduleId" asp-items="@(new SelectList(ViewBag.Schedules, "Id", "DayOfWeek"))"></select>
+        <span asp-validation-for="ScheduleId"></span>
     </div>
 
     <button type="submit">Create</button>
-    <a asp-action="Index">Отмена</a>
+    <a asp-action="Index">Cancel</a>
 </form>

@@ -1,17 +1,38 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Cat
+@using Microsoft.AspNetCore.Mvc.Rendering
 
-<h1>Редактировать кафе</h1>
+<h1>Edit Cat</h1>
 
-<form asp-action="Edit">
+<form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
-    
+
+    <div asp-validation-summary="All"></div>
+
     <div>
-        <label asp-for="Address">Адрес</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
     </div>
 
-    <button type="submit">Сохранить</button>
-    <a asp-action="Index">Отмена</a>
+    <div>
+        <label asp-for="Breed"></label>
+        <input asp-for="Breed" />
+        <span asp-validation-for="Breed"></span>
+    </div>
+
+    <div>
+        <label asp-for="Gender"></label>
+        <input asp-for="Gender" />
+        <span asp-validation-for="Gender"></span>
+    </div>
+
+    <div>
+        <label asp-for="ScheduleId"></label>
+        <select asp-for="ScheduleId" asp-items="@(new SelectList(ViewBag.Schedules, "Id", "DayOfWeek", Model.ScheduleId))"></select>
+        <span asp-validation-for="ScheduleId"></span>
+    </div>
+
+    <button type="submit">Save</button>
+    <a asp-action="Index">Cancel</a>
 </form>

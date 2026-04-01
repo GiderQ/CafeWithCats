@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace CafeWithCats.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class CatsController : ControllerBase
+public class CatsController : Controller
 {
     private readonly CafeContext _context;
 
@@ -14,39 +11,91 @@ public class CatsController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.Cats.ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Index()
     {
-        var cat = _context.Cats.Find(id);
-        return cat == null ? NotFound() : Ok(cat);
+        var cats = await _context.Cats.Include(c => c.Schedule).ToListAsync();
+        return View(cats);
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var cat = await _context.Cats
+            .Include(c => c.Schedule)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (cat == null) return NotFound();
+        return View(cat);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        ViewBag.Schedules = _context.Schedules.ToList();
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Cat cat)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Cat cat)
     {
-        _context.Cats.Add(cat);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = cat.Id }, cat);
+        if (!await _context.Schedules.AnyAsync(s => s.Id == cat.ScheduleId))
+        {
+            ModelState.AddModelError("ScheduleId", "Selected schedule does not exist.");
+        }
+
+        if (ModelState.IsValid)
+        {
+            _context.Cats.Add(cat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.Schedules = _context.Schedules.ToList();
+        return View(cat);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Cat cat)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
     {
-        _context.Cats.Update(cat);
-        _context.SaveChanges();
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var cat = _context.Cats.Find(id);
+        var cat = await _context.Cats.FindAsync(id);
         if (cat == null) return NotFound();
+
+        ViewBag.Schedules = _context.Schedules.ToList();
+        return View(cat);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, Cat cat)
+    {
+        if (id != cat.Id) return BadRequest();
+
+        if (!ModelState.IsValid) return View(cat);
+
+        _context.Cats.Update(cat);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var cat = await _context.Cats
+            .Include(c => c.Schedule)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (cat == null) return NotFound();
+        return View(cat);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var cat = await _context.Cats.FindAsync(id);
+        if (cat == null) return NotFound();
+
         _context.Cats.Remove(cat);
-        _context.SaveChanges();
-        return NoContent();
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

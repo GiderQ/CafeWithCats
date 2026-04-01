@@ -1,17 +1,28 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Reservation
 
-<h1>Редактировать кафе</h1>
+@{
+    ViewData["Title"] = "Edit Reservation";
+}
 
-<form asp-action="Edit">
-    @Html.AntiForgeryToken()
+<h1>Edit Reservation</h1>
+
+<form asp-action="Edit" method="post">
     <input type="hidden" asp-for="Id" />
-    
-    <div>
-        <label asp-for="Address">Адрес</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+
+    <div class="form-group">
+        <label asp-for="CafeId">Cafe</label>
+        <select asp-for="CafeId" class="form-control" asp-items="@(new SelectList(ViewBag.Cafes, "Id", "Name", Model.CafeId))">
+            <option value="">-- Select a cafe --</option>
+        </select>
+        <span asp-validation-for="CafeId" class="text-danger"></span>
     </div>
 
-    <button type="submit">Сохранить</button>
-    <a asp-action="Index">Отмена</a>
+    <div class="form-group">
+        <label asp-for="ReservedTime">Reserved Time</label>
+        <input asp-for="ReservedTime" class="form-control" type="time" value="@Model.ReservedTime.ToString(@"hh\:mm")" />
+        <span asp-validation-for="ReservedTime" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>

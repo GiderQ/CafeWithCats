@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace CafeWithCats.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class SchedulesController : ControllerBase
+public class SchedulesController : Controller
 {
     private readonly CafeContext _context;
 
@@ -14,39 +11,106 @@ public class SchedulesController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.Schedules.ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Index()
     {
-        var schedule = _context.Schedules.Find(id);
-        return schedule == null ? NotFound() : Ok(schedule);
+        var schedules = await _context.Schedules.Include(s => s.Cats).ToListAsync();
+        return View(schedules);
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var schedule = await _context.Schedules
+            .Include(s => s.Cats)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (schedule == null) return NotFound();
+        return View(schedule);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        ViewBag.Cats = _context.Cats.ToList();
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Schedule schedule)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Schedule schedule, int[] selectedCats)
     {
-        _context.Schedules.Add(schedule);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = schedule.Id }, schedule);
+        if (selectedCats != null)
+        {
+            schedule.Cats = _context.Cats.Where(c => selectedCats.Contains(c.Id)).ToList();
+        }
+
+        if (ModelState.IsValid)
+        {
+            _context.Schedules.Add(schedule);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.Cats = _context.Cats.ToList();
+        return View(schedule);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Schedule schedule)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
     {
-        _context.Schedules.Update(schedule);
-        _context.SaveChanges();
-        return NoContent();
-    }
+        var schedule = await _context.Schedules
+            .Include(s => s.Cats)
+            .FirstOrDefaultAsync(s => s.Id == id);
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var schedule = _context.Schedules.Find(id);
         if (schedule == null) return NotFound();
+
+        ViewBag.Cats = _context.Cats.ToList();
+        return View(schedule);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, Schedule schedule, int[] selectedCats)
+    {
+        if (id != schedule.Id) return BadRequest();
+
+        if (selectedCats != null)
+        {
+            schedule.Cats = _context.Cats.Where(c => selectedCats.Contains(c.Id)).ToList();
+        }
+
+        if (ModelState.IsValid)
+        {
+            _context.Schedules.Update(schedule);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.Cats = _context.Cats.ToList();
+        return View(schedule);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var schedule = await _context.Schedules
+            .Include(s => s.Cats)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (schedule == null) return NotFound();
+        return View(schedule);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var schedule = await _context.Schedules
+            .Include(s => s.Cats)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (schedule == null) return NotFound();
+
         _context.Schedules.Remove(schedule);
-        _context.SaveChanges();
-        return NoContent();
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

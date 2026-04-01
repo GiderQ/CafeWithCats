@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace CafeWithCats.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ReservationClientsController : ControllerBase
+public class ReservationClientsController : Controller
 {
     private readonly CafeContext _context;
 
@@ -14,31 +11,81 @@ public class ReservationClientsController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_context.ReservationClients.ToList());
-
-    [HttpGet("{reservationId}/{clientId}")]
-    public IActionResult Get(int reservationId, int clientId)
+    public async Task<IActionResult> Index()
     {
-        var rc = _context.ReservationClients.Find(reservationId, clientId);
-        return rc == null ? NotFound() : Ok(rc);
+        var reservationClients = await _context.ReservationClients
+                                               .Include(rc => rc.Reservation)
+                                               .Include(rc => rc.Client)
+                                               .ToListAsync();
+        return View(reservationClients);
+    }
+
+    public async Task<IActionResult> Details(int reservationId, int clientId)
+    {
+        var reservationClient = await _context.ReservationClients
+                                             .Include(rc => rc.Reservation)
+                                             .Include(rc => rc.Client)
+                                             .FirstOrDefaultAsync(rc => rc.ReservationId == reservationId && rc.ClientId == clientId);
+
+        if (reservationClient == null) return NotFound();
+        return View(reservationClient);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        ViewBag.Reservations = _context.Reservations.ToList();
+        ViewBag.Clients = _context.Clients.ToList();
+        return View();
     }
 
     [HttpPost]
-    public IActionResult Create(ReservationClient rc)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ReservationClient reservationClient)
     {
-        _context.ReservationClients.Add(rc);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { reservationId = rc.ReservationId, clientId = rc.ClientId }, rc);
+        if (!await _context.Reservations.AnyAsync(r => r.Id == reservationClient.ReservationId))
+        {
+            ModelState.AddModelError("ReservationId", "Selected reservation does not exist.");
+        }
+        if (!await _context.Clients.AnyAsync(c => c.Id == reservationClient.ClientId))
+        {
+            ModelState.AddModelError("ClientId", "Selected client does not exist.");
+        }
+
+        if (ModelState.IsValid)
+        {
+            _context.ReservationClients.Add(reservationClient);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.Reservations = _context.Reservations.ToList();
+        ViewBag.Clients = _context.Clients.ToList();
+        return View(reservationClient);
     }
 
-    [HttpDelete("{reservationId}/{clientId}")]
-    public IActionResult Delete(int reservationId, int clientId)
+    [HttpGet]
+    public async Task<IActionResult> Delete(int reservationId, int clientId)
     {
-        var rc = _context.ReservationClients.Find(reservationId, clientId);
-        if (rc == null) return NotFound();
-        _context.ReservationClients.Remove(rc);
-        _context.SaveChanges();
-        return NoContent();
+        var reservationClient = await _context.ReservationClients .Include(rc => rc.Reservation)
+                                             .Include(rc => rc.Client)
+                                             .FirstOrDefaultAsync(rc => rc.ReservationId == reservationId && rc.ClientId == clientId);
+
+        if (reservationClient == null) return NotFound();
+        return View(reservationClient);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int reservationId, int clientId)
+    {
+        var reservationClient = await _context.ReservationClients
+                                             .FirstOrDefaultAsync(rc => rc.ReservationId == reservationId && rc.ClientId == clientId);
+
+        if (reservationClient == null) return NotFound();
+
+        _context.ReservationClients.Remove(reservationClient);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

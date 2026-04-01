@@ -1,14 +1,16 @@
-﻿@model CafeWithCats.Models.Dish
+﻿@model CafeWithCats.Models.Drink
 
-<h1>Детали блюда</h1>
+<h1>Details Drink</h1>
 
 <div>
-    <p><strong>Price:</strong> @Model.Price</p>
-    <p><strong>Weight:</strong> @Model.Weight</p>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Alcoholic:</strong> @Model.IsAlcoholic</p>
     <p><strong>Ingredients:</strong> @Model.Ingredients</p>
+    <p><strong>Volume:</strong> @Model.Volume</p>
+    <p><strong>Price:</strong> @Model.Price</p>
 </div>
 
 <p>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a> |
-    <a asp-action="Index">Назад</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Return</a>
 </p>

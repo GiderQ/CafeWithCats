@@ -1,31 +1,35 @@
-﻿@model IEnumerable<CafeWithCats.Models.Dish>
+﻿@model IEnumerable<CafeWithCats.Models.Drink>
 
-<h1>Блюда</h1>
+<h1>Drinks</h1>
 
 <p>
-    <a asp-action="Create">Создать новое блюдо</a>
+    <a asp-action="Create">Create Drinks</a>
 </p>
 
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
     <tr>
-        <th>Price</th>
-        <th>Weight</th>
+        <th>Name</th>
+        <th>Alcoholic</th>
         <th>Ingredients</th>
+        <th>Volume</th>
+        <th>Price</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var dish in Model)
+    @foreach (var drink in Model)
     {
         <tr>
-            <td>@dish.Price</td>
-            <td>@dish.Weight</td>
-            <td>@dish.Ingredients</td>
+            <td>@drink.Name</td>
+            <td>@drink.IsAlcoholic</td>
+            <td>@drink.Ingredients</td>
+            <td>@drink.Volume</td>
+            <td>@drink.Price</td>
             <td>
-                <a asp-action="Details" asp-route-id="@dish.Id">Подробнее</a> |
-                <a asp-action="Edit" asp-route-id="@dish.Id">Изменить</a> |
-                <a asp-action="Delete" asp-route-id="@dish.Id">Удалить</a>
+                <a asp-action="Details" asp-route-id="@drink.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@drink.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@drink.Id">Delete</a>
             </td>
         </tr>
     }

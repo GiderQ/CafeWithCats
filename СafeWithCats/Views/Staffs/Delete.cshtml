@@ -1,11 +1,35 @@
-﻿@model CafeWithCats.Models.Cafe
+﻿@model CafeWithCats.Models.Staff
 
-<h1>Удалить кафе?</h1>
-<p>Вы уверены, что хотите удалить <strong>@Model.Address</strong>?</p>
+@{
+    ViewData["Title"] = "Delete Staff";
+}
 
-<form asp-action="Delete">
-    @Html.AntiForgeryToken()
+<h1>Delete Staff</h1>
+
+<h3>Are you sure you want to delete this staff?</h3>
+
+<dl class="row">
+    <dt class="col-sm-2">Firstname</dt>
+    <dd class="col-sm-10">@Model.FirstName</dd>
+
+    <dt class="col-sm-2">Lastname</dt>
+    <dd class="col-sm-10">@Model.LastName</dd>
+
+    <dt class="col-sm-2">Position</dt>
+    <dd class="col-sm-10">@Model.Position</dd>
+
+    <dt class="col-sm-2">Work Phone</dt>
+    <dd class="col-sm-10">@Model.WorkPhone</dd>
+
+    <dt class="col-sm-2">Work Email</dt>
+    <dd class="col-sm-10">@Model.WorkEmail</dd>
+
+    <dt class="col-sm-2">Salary</dt>
+    <dd class="col-sm-10">@Model.Salary</dd>
+</dl>
+
+<form asp-action="DeleteConfirmed" method="post">
     <input type="hidden" asp-for="Id" />
-    <button type="submit">Да, удалить</button>
-    <a asp-action="Index">Отмена</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>

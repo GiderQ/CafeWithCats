@@ -1,24 +1,33 @@
-﻿@model IEnumerable<CafeWithCats.Models.Cafe>
+﻿@model IEnumerable<CafeWithCats.Models.Cat>
 
-<h1>Кафе</h1>
-<a asp-action="Create">Добавить кафе</a>
+<h1>Cats</h1>
 
-<table>
+<p>
+    <a asp-action="Create">Create New Cat</a>
+</p>
+
+<table class="table table-striped table-hover">
     <thead>
     <tr>
-        <th>Адрес</th>
-        <th>Действия</th>
+        <th>Name</th>
+        <th>Breed</th>
+        <th>Gender</th>
+        <th>Schedule</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var cafe in Model)
+    @foreach (var cat in Model)
     {
         <tr>
-            <td>@cafe.Address</td>
+            <td>@cat.Name</td>
+            <td>@cat.Breed</td>
+            <td>@cat.Gender</td>
+            <td>@cat.Schedule?.DayOfWeek</td>
             <td>
-                <a asp-action="Details" asp-route-id="@cafe.Id">Подробнее</a>
-                <a asp-action="Edit" asp-route-id="@cafe.Id">Изменить</a>
-                <a asp-action="Delete" asp-route-id="@cafe.Id">Удалить</a>
+                <a asp-action="Details" asp-route-id="@cat.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@cat.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@cat.Id">Delete</a>
             </td>
         </tr>
     }
