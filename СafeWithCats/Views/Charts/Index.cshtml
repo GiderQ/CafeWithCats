@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Drink Prices Chart";
+    var drinkNames = Json.Serialize(ViewBag.DrinkNames);
+    var drinkPrices = Json.Serialize(ViewBag.DrinkPrices);
+}
+
+<h1 class="page-title">Drink Prices</h1>
+<p class="page-subtitle">Cost overview of all drinks</p>
+
+<div class="card p-3">
+    <div class="card-header">Drink Prices (₴)</div>
+    <div class="card-body">
+        <canvas id="drinkPriceChart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script>
+    new Chart(document.getElementById('drinkPriceChart'), {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(drinkNames),
+            datasets: [{
+                label: 'Price (₴)',
+                data: @Html.Raw(drinkPrices),
+                backgroundColor: '#c8813a',
+                borderColor: '#6b3f1f',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>
+}
