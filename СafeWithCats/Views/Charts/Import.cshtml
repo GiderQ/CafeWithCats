@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Import Drinks";
+}
+
+<h1 class="page-title">Import Drinks</h1>
+<p class="page-subtitle">Upload an Excel (.xlsx) file to import drinks</p>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" style="background:#eaf3de; border-color:#4a7c59; color:#3a6347;">
+        @ViewBag.Success
+    </div>
+}
+
+<div class="card p-4" style="max-width: 500px;">
+    <div class="card-header">Upload Excel File</div>
+    <div class="card-body">
+        <form asp-action="Import" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">Excel File (.xlsx)</label>
+                <input type="file" name="file" accept=".xlsx" class="form-control" />
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Import</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h5 style="color: var(--cafe-brown); font-family: 'Playfair Display', serif;">Expected format:</h5>
+    <table class="table table-bordered" style="max-width: 600px;">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price (₴)</th>
+            <th>Volume (ml)</th>
+            <th>Alcoholic</th>
+            <th>Ingredients</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Latte</td>
+            <td>65.00</td>
+            <td>250</td>
+            <td>No</td>
+            <td>Milk, Espresso</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
