@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CafeWithCats.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize(Roles = "Admin,Manager")]
 public class DishesController : Controller
 {
     private readonly CafeContext _context;

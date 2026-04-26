@@ -19,6 +19,15 @@
     </div>
 </div>
 
+<div class="card p-3 mt-4">
+    <div class="card-header">Alcoholic vs Non-Alcoholic Drinks</div>
+    <div class="card-body d-flex justify-content-center">
+        <div style="max-width: 300px; width: 100%;">
+            <canvas id="drinkTypeChart"></canvas>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <script>
@@ -40,5 +49,28 @@
             scales: { y: { beginAtZero: true } }
         }
     });
+    new Chart(document.getElementById('drinkTypeChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Alcoholic', 'Non-Alcoholic'],
+            datasets: [{
+                data: [@ViewBag.AlcoholicCount, @ViewBag.NonAlcoholicCount],
+                backgroundColor: ['#c8813a', '#4a7c59'],
+                borderColor: ['#6b3f1f', '#3a6347'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` ${ctx.label}: ${ctx.raw} drinks`
+                    }
+                }
+            }
+        }
+});
 </script>
 }

@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CafeWithCats.Models;
 
-public class CafeContext : DbContext
+public class CafeContext : IdentityDbContext<AppUser>
 {
     public CafeContext(DbContextOptions<CafeContext> options) : base(options) { }
 
@@ -14,18 +15,19 @@ public class CafeContext : DbContext
     public DbSet<Dish> Dishes { get; set; }
     public DbSet<Drink> Drinks { get; set; }
     public DbSet<Menu> Menus { get; set; }
-    
     public DbSet<MenuDish> MenuDishes { get; set; }
     public DbSet<MenuDrink> MenuDrinks { get; set; }
-    
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<ReservationClient> ReservationClients { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ReservationClient>().HasKey(rc => new { rc.ReservationId, rc.ClientId });
-        
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<ReservationClient>()
+            .HasKey(rc => new { rc.ReservationId, rc.ClientId });
+
         modelBuilder.Entity<MenuDish>()
             .HasKey(md => new { md.MenuId, md.DishId });
 

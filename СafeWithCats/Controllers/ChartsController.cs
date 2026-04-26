@@ -2,9 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using CafeWithCats.Models;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace CafeWithCats.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class ChartsController : Controller
 {
     private readonly CafeContext _context;
@@ -20,7 +23,8 @@ public class ChartsController : Controller
 
         ViewBag.DrinkNames = drinks.Select(d => d.Name).ToList();
         ViewBag.DrinkPrices = drinks.Select(d => d.Price).ToList();
-
+        ViewBag.AlcoholicCount = drinks.Count(d => d.IsAlcoholic);
+        ViewBag.NonAlcoholicCount = drinks.Count(d => !d.IsAlcoholic);
         return View();
     }
 

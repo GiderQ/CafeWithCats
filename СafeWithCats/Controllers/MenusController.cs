@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using CafeWithCats.Models;
 using CafeWithCats.Models.ViewModels;
 namespace CafeWithCats.Controllers;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class MenusController : Controller
 {
     private readonly CafeContext _context;
