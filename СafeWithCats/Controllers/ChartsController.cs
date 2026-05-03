@@ -96,7 +96,7 @@ public class ChartsController : Controller
 
         using var workbook = new XLWorkbook(stream);
         var ws = workbook.Worksheet(1);
-        var rows = ws.RangeUsed().RowsUsed().Skip(1); // skip header
+        var rows = ws.RangeUsed().RowsUsed().Skip(1);
 
         int imported = 0;
         int skipped = 0;
@@ -106,7 +106,6 @@ public class ChartsController : Controller
             var name = row.Cell(2).GetString().Trim();
             if (string.IsNullOrEmpty(name)) continue;
 
-            // Skip if drink with same name already exists
             if (await _context.Drinks.AnyAsync(d => d.Name == name))
             {
                 skipped++;

@@ -14,8 +14,7 @@ public class ReservationsController : Controller
     public async Task<IActionResult> Index()
     {
         var reservations = await _context.Reservations
-                                         .Include(r => r.Cafe)   // ✅ навигационное свойство
-                                         //.Include(r => r.Client) // если добавишь Client
+                                         .Include(r => r.Cafe)
                                          .ToListAsync();
         return View(reservations);
     }
@@ -23,8 +22,7 @@ public class ReservationsController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var reservation = await _context.Reservations
-                                        .Include(r => r.Cafe) // для деталей тоже можно
-                                        //.Include(r => r.Client)
+                                        .Include(r => r.Cafe)
                                         .FirstOrDefaultAsync(r => r.Id == id);
         if (reservation == null) return NotFound();
         return View(reservation);
